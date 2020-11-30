@@ -1,0 +1,104 @@
+<%- include('../partials/header') %>
+
+<nav class="navbar navbar-light bg-light">
+  <% if(message.length) { %>
+    <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+    <%
+            }%>
+
+<% if(!message.length) { %>
+  <a class="navbar-brand" href="../admin">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+  <%
+          }%>
+</nav>
+
+<br />
+
+<h1 class="text-center text-primary">Member List</h1>
+
+<% if(message) { %>
+<div class="alert alert-success" role="alert">
+  <%= message %>
+</div>
+<%
+        }%>
+<div class="container-fluid">
+<table table class="table table-dark table-bordered" style="margin-top: 20px; ">
+  <thead>
+    <tr>
+
+      <th scope>Messenger ID</th>
+
+      <th scope>Name</th>
+     
+      <th scope>Email</th>
+      <th scope>Ph No</th>
+      <th scope>Verification</th>
+      <th scope>Created Date</th>
+      <th scope>Confirmation</th>
+      <th scope>Deletion</th>
+
+
+      <!-- <th scope="col" colspan=""></th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% members.forEach(function(member) { %>
+    <tr>
+
+ 
+
+      <td><%=member.messengerId%></td>
+      <td><%=member.name%></td>
+      <td><%=member.email %></td>
+    
+      <td><%=member.phNo%></td>
+  
+   
+      <td><%=member.verfied ? "yes" : "no"%></td>
+      <td><%=member.createdBy.toLocaleDateString()%></td>
+     
+        <td>
+     
+
+       
+           
+            <% if(!member.verfied) { %>
+           
+                <form style="display: inline" action="/admin/members/" method="POST">
+                  <input name="id" hidden value=<%=member._id %> />
+                  <input name="status" value="accept" hidden />
+                
+        
+        
+                  <button type="submit" class="btn btn-outline-primary" style="width: 70px">Accept</button>
+                </form>
+
+    
+              
+            </td>
+                <%
+                        }%>
+
+          
+        </td>
+          
+
+        <td>
+          <form style="display: inline" action="/admin/members/" method="POST">
+            <input name="id" hidden value=<%=member._id %> />
+            <input name="status" value="delete" hidden />
+          
+  
+  
+            <button type="submit" class="btn btn-outline-danger" style="width: 70px">Delete</button>
+          </form>
+        </td>
+     
+   
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

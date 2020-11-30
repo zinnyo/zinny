@@ -1,0 +1,90 @@
+<%- include('../partials/header') %>
+<style>
+  body {
+      background: #343a40;
+      color: white;
+  }
+
+ 
+   p {
+   color: black
+ }
+</style>
+<nav class="navbar navbar-light bg-light">
+    <% if(success.length) { %>
+      <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+      <%
+              }%>
+  
+  <% if(!success.length) { %>
+    <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+    <%
+            }%>
+  </nav>
+
+<br />
+
+
+<div class="container">
+    <h2>Product Update Form</h2>
+    <% if(error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+        <%
+        }%>
+
+        <% if(success) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+        <%
+        }%>
+       
+    <% if(product) {%>
+    <form action="/admin/edit/<%=product.code%>" method="POST">
+        
+        <div class="form-group">
+
+            <label for="code">Product Code</label>
+            <input class="form-control" id="code" name="code" placeholder="Product Code" value="<%= product.code%>"  required/>
+        </div>
+        <div class="form-group">
+            <label for="name">Product Name</label>
+            <input class="form-control" id="name" placeholder="Product Name" name="name" value="<%= product.name%>" required />
+        </div>
+        <div class="form-group">
+            <label for="form-check" style="display: block">In stock</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="available" id="yes" <%=product.availabe ? "checked" : ""%> value=true />
+                <label class="form-check-label" for="yes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="available" id="no" value=false <%=!product.availabe ? "checked" : ""%> />
+                <label class="form-check-label" for="no">No</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Product Price($)</label>
+            <input class="form-control" id="price" placeholder="Product Price" name="price" value="<%= product.price%>" required />
+        </div>
+
+        <div class="form-group">
+            <label for="price">Product Type</label>
+            <input class="form-control" id="price" placeholder="Product Type" name="type" value="<%= product.type%>" required />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3" name="description" ><%=product.description%></textarea>
+        </div>
+
+     
+
+        <button type="submit" class="btn btn-outline-primary">Update</button>
+    </form>
+<% } %>
+</div>
+
+<%- include('../partials/footer') %>

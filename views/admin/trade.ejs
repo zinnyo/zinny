@@ -1,0 +1,102 @@
+<%- include('../partials/header') %>
+
+<nav class="navbar navbar-light bg-light">
+  <% if(message.length) { %>
+    <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+    <%
+            }%>
+
+<% if(!message.length) { %>
+  <a class="navbar-brand" href="../admin">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+  <%
+          }%>
+</nav>
+
+
+<h1 class="text-center text-primary">Trade Request List</h1>
+
+<% if(message) { %>
+<div class="alert alert-success" role="alert">
+  <%= message %>
+</div>
+<%
+        }%>
+<div class="container-fluid">
+<table table class="table table-dark table-bordered" style="margin-top: 20px; ">
+  <thead>
+    <tr>
+
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Ph No</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Product Type</th>
+      <th scope="col">Description</th>
+      <th scope="col">Accepted</th>
+      <th scope="col">Traded</th>
+      <th scope>Confirmation</th>
+      <th scope>Deletion</th>
+      <!-- <th scope="col" colspan=""></th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% trades.forEach(function(trade) { %>
+    <tr>
+
+      <td>
+        <img width="100" height="100" class="img-thumbnail" src="<%=trade.photo%>" />
+      </td>
+
+    
+      <td><%=trade.name%></td>
+      <td><%=trade.email %></td>
+      <td><%=trade.address%></td>
+      <td><%=trade.phNo%></td>
+      <td><%=trade.item_name%></td>
+      <td>$<%=trade.price%></td>
+      <td><%=trade.type%></td>
+      <td><%=trade.description%></td>
+      <td><%=trade.accepted ? "yes" : "no"%></td>
+      <td><%=trade.traded ? "yes" : "no"%></td>
+
+     
+        <td>
+     
+
+          <% if(!trade.accepted) { %>
+           
+            <form style="display: inline" action="/admin/trade/" method="POST">
+              <input name="id" hidden value=<%=trade._id %> />
+              <input name="status" value="accept" hidden />
+            
+    
+    
+              <button type="submit" class="btn btn-outline-primary" style="width: 70px">Accept</button>
+            </form>
+
+         
+        </td>
+            <%
+                    }%>
+
+        <td>
+          <form style="display: inline" action="/admin/trade/" method="POST">
+            <input name="id" hidden value=<%=trade._id %> />
+            <input name="status" value="delete" hidden />
+          
+  
+  
+            <button type="submit" class="btn btn-outline-danger" style="width: 70px">Delete</button>
+          </form>
+        </td>
+     
+   
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+<%- include('../partials/footer') %>

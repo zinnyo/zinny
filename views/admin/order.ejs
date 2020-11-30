@@ -1,0 +1,103 @@
+<%- include('../partials/header') %>
+
+
+
+<nav class="navbar navbar-light bg-light">
+  <% if(message.length) { %>
+    <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+    <%
+            }%>
+
+<% if(!message.length) { %>
+  <a class="navbar-brand" href="../admin">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+  <%
+          }%>
+</nav>
+
+<div >
+  <h1 class="text-center text-primary">Order List</h1>
+
+
+<% if(message) { %>
+    <div class="alert alert-success" role="alert">
+      <%= message %>
+    </div>
+    <%
+            }%>
+<div class="container-fluid">
+<table class="table table-dark table-bordered" style="margin-top: 20px;">
+  <thead>
+    <tr>
+
+      <th scope="col">Code</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Ph No</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Status</th>
+      <th scope="col">Used Point</th>
+      <th scope="col">Bonus Point</th>
+      <th scope="col">Confirmation</th>
+      <th scope="col">Deletion</th>
+  
+      <!-- <th scope="col" colspan=""></th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.forEach(function(order) { %>
+    <tr>
+
+    
+
+      <td><%=order.code%></td>
+      <td><%=order.productName%></td>
+      <td><%=order.name%></td>
+      <td><%=order.email %></td>
+      <td><%=order.address%></td>
+      <td><%=order.phNo%></td>
+      <td><%=order.qty%></td>
+      <td>$<%=order.cost%></td>
+      <td><%=order.status%></td>
+      <td><%=order.usedPoint%></td>
+      <td><%=order.bonusPoint%></td>
+      <td>
+        <form style="display: inline" action="/admin/order/" method="POST">
+            <input name="id" hidden value=<%=order._id %> />
+            <input name="status" value="accept" hidden />
+          
+  
+          
+            
+
+            <button type="submit" class="btn btn-outline-primary" style="width: 70px">Accept</button>
+          </form>
+          <form style="display: inline" action="/admin/order/" method="POST">
+              <input name="id" hidden value=<%=order._id %> />
+              <input name="status" value="decline" hidden />
+            
+    
+    
+              <button type="submit" class="btn btn-outline-warning" style="width: 70px">Decline</button>
+            </form>
+
+      </td>
+      <td>
+        <a href="/admin/order/<%=order._id%>" class="btn btn-outline-danger" style="width: 70px">Delete</button>
+         
+      </td>
+      
+
+     
+     
+     
+   
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+</div>
+</div>
+<%- include('../partials/footer') %>

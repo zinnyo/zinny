@@ -1,0 +1,110 @@
+<%- include('../partials/header') %>
+
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+</nav>
+<br />
+
+<div class="container">
+  <h2>Your Trade</h2>
+  <form action="/customer/<%=id%>/my-trade/<%=trade._id%>" method="POST" >
+
+
+        <% if(message) { %>
+        <div class="alert alert-success" role="alert">
+            <%= message %>
+        </div>
+        <%
+        }%>
+    <div class="form-group">
+      <label for="name">Your Name</label>
+      <input
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Your Name"
+        value=<%=trade.name%>
+      />
+    </div>
+    <div class="form-group">
+      <label for="email">Your Email</label>
+      <input
+        class="form-control"
+        id="email"
+        type="email"
+        placeholder="Your Email"
+        name="email"
+        value=<%=trade.email%>
+      />
+    </div>
+    <div class="form-group">
+      <label for="phno">Your Phone Number</label>
+      <input
+        class="form-control"
+        id="phno"
+        placeholder="Your Phone Number"
+        name="phNo"
+        value=<%=trade.phNo%>
+      />
+    </div>
+    <div class="form-group">
+      <label for="address">Your Address</label>
+      <input
+        class="form-control"
+        id="address"
+        placeholder="Address"
+        name="address"
+        value=<%=trade.address%>
+      />
+    </div>
+    <div class="form-group">
+      <label for="item_name">Your Item Name</label>
+      <input
+        class="form-control"
+        id="item_name"
+        placeholder="Your Item Name"
+        name="item_name"
+        value=<%=trade.item_name%>
+      />
+    </div>
+    
+
+    <div class="form-group">
+      <label for="price">Item Price</label>
+      <input
+        class="form-control"
+        id="price"
+        placeholder="Product Price"
+        name="price"
+        value=<%=trade.price%>
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Item Type</label>
+      <input
+        class="form-control"
+        id="type"
+        placeholder="Product Type"
+        name="type"
+        value=<%=trade.type%>
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        rows="3"
+        name="description"
+      ><%=trade.description%></textarea>
+    </div>
+
+    
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,216 @@
+<%- include('../partials/header') %>
+
+
+<style>
+  body {
+      background: #343a40;
+      color: white;
+  }
+
+ p {
+   color: black
+ }
+</style>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="../">Zinny Gaming PC & Components Sale, Trade-in and Service</a>
+
+</nav>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Order Form</h1>
+            <br>
+            <form action="/customer/<%=id%>/order/<%=product.code%>" method="POST" >
+              <% if(error) { %>
+                  <div class="alert alert-danger" role="alert">
+                      <%= error %>
+                  </div>
+                  <%
+                  }%>
+          
+                  <% if(success) { %>
+                  <div class="alert alert-success" role="alert">
+                      <%= success %>
+                  </div>
+                  <%
+                  }%>
+
+
+                <% if(point && member.verfied) { %>
+                  <h3>You have <span style="color: orange" id="customer_point"><%= point %></span><span style="color: orange">point</span> to be used </h3>
+                  <br>
+                  <%
+                  }%>
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Your Name" required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Your Email</label>
+                <input
+                  class="form-control"
+                  id="email"
+                  type="email"
+                  placeholder="Your Email"
+                  name="email" required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phno">Your Phone Number</label>
+                <input
+                  class="form-control"
+                  id="phno"
+                  placeholder="Your Phone Number"
+                  name="phNo" required
+                  type="number"
+                  
+                  
+                />
+              </div>
+            
+              <div class="form-group">
+                <label for="address">Your Address</label>
+                <input
+                  class="form-control"
+                  id="address"
+                  placeholder="Address"
+                  name="address" required
+                />
+              </div>
+            
+              <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input
+                  class="form-control"
+                  id="quantity"
+                  placeholder="Quantity"
+                  name="qty"
+                  value="1"
+                  type="number"
+                  min="1"
+                />
+              </div>
+
+              <% if(point && member.verfied ) { %>
+                <div class="form-group">
+                  <label for="quantity">Point</label>
+                  <input
+                    class="form-control"
+                    id="point"
+                    placeholder="Point"
+                    name="point"
+                    value="0"
+                    type="number"
+                    min="0"
+                  />
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span class="text-danger" id="enough" hidden>You don't have enough point</span>
+                  <span style="color: darkorange">1 point = $1</span></div>
+                <br>
+                <%
+                }%>
+
+             
+             
+
+              
+              <input hidden value="<%=product.code%>" name="code" />
+            
+              <input name="productName" value="<%=product.name%>" hidden/>
+          
+              <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+            </form>
+        </div>
+
+        <% if(product) { %>
+          <div class="col-md-6">
+            <h3>Your Product Information</h3>
+            <div class="card" >
+                <img class="card-img-top" src="<%=product.photo%>" height="200" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title"> Name: <%=product.name%></h5>
+                  <p class="card-text">Product Type: <%=product.type%> </p>
+                  <p class="card-text">Product Price: $ <span id="item_price"><%=product.price%> </span> </p>
+                  <p class="card-text">Description: <%=product.description%> </p>
+                  <p class="card-text">Toal Cost(QTY * Price - Point) : <span id="cost">$<%=product.price%></span></p>
+                 
+                </div>
+              </div>
+        </div>
+          <%
+          }%>
+
+
+      
+    </div>
+</div>
+
+
+<script>
+
+  var Point = document.getElementById("point");
+  var userPoint = parseInt(document.getElementById("customer_point").innerText);
+  var errorPoint = document.getElementById("enough");
+  var submit = document.getElementById("submit");
+  var pointValue = 0;
+  var qtyValue = 1;
+  var cost = document.getElementById("cost");
+  var itemPrice = parseInt(document.getElementById("item_price").innerText);
+
+  var qty = document.getElementById("quantity")
+  
+
+  Point.addEventListener("change", function() {
+    pointValue = parseInt(Point.value);
+   
+    if(pointValue) {
+      cost.innerText = `$ ${qtyValue * itemPrice - pointValue }`;
+    } else {
+      submit.hidden = false;
+      errorPoint.innerHTML = "You don't have enough point";
+      errorPoint.hidden = true;
+      cost.innerText = ``;
+    }
+
+    if(pointValue > userPoint){
+      submit.hidden = true;
+      errorPoint.innerHTML = "You don't have enough point";
+      errorPoint.hidden = false;
+    } else {
+      submit.hidden = false;
+      errorPoint.innerHTML = "You don't have enough point";
+      errorPoint.hidden = true;
+    }
+
+    if(!pointValue) {
+      submit.hidden = true;
+      errorPoint.innerHTML = "Number Only accepted"
+      errorPoint.hidden = false;
+    }
+  })
+
+  qty.addEventListener("change", function() {
+    qtyValue = parseInt(qty.value);
+    if(qtyValue) {
+      cost.innerText = `$ ${qtyValue * itemPrice - pointValue }`;
+    } else {
+      submit.hidden = false;
+      errorPoint.innerHTML = "You don't have enough point";
+      errorPoint.hidden = true;
+      cost.innerText = ``;
+    }
+  })
+  
+
+</script>
+
+<%- include('../partials/footer') %>
